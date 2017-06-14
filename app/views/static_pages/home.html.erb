@@ -1,0 +1,103 @@
+<div class="col-md-12">
+<div class="col-md-12">
+
+  <%if !logged_in? %>
+   <center style="margin-bottom: 10px; margin-top: 10px;"><%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %></center>
+  <%end%>
+
+
+<%= render 'static_pages/slider' %>
+
+
+<style>
+.photo_represent {
+width: 100%;
+height: 200px;
+margin: 0;
+}
+
+.photo_represent a > img {
+width: auto;
+max-height: 100%;
+vertical-align: middle;
+margin-left: auto;
+margin-right: auto;
+display: table-cell;
+
+}
+
+</style>
+<% if (!@categories.blank?) %>
+<% @categories.each do |cate|%>
+<% count = 0 %>
+
+  <div class="section-header-total">
+    <div class="section-header"  style="display: inline;" >
+        <%= cate.name%>
+    </div>
+    <div class="section-header-seemore" style="display: inline; float: right; color: #ff5722;
+">
+      <%= link_to image_tag("seemore.jpg", height: '13', width: 'auto'), cate, id: "seemore_logo" %>
+    </div>
+  </div>
+
+  <div class="food-separator">
+
+  </div>
+  <h2 style="margin: 0px">
+    <tbody>
+      <div class="featured-block">
+    <div class="row">
+    <% @foods.each do |food| %>
+    <%if (count > 3) %>
+      <% next %>
+      <%end %>
+    <%if (food.category_id==cate.id)%>
+      <% count = count + 1 %>
+      <div class="col-md-3">
+        <div class="block">
+          <div class="thumbnail">
+          <!--<a href="foods/<%=food.id%>"><img src = "<%=food.url%>"></a> -->
+          <div class="photo_represent"> 
+            <a href="foods/<%=food.id%>"><img src = "<%=food.url%>"></a> 
+          </div>
+            <div class="caption">
+              <h1><strong><%= food.name %></strong></h1>
+              <h4><strong><%= food.price %> VND</strong></h4>
+
+    <% if logged_in? && current_user.admin?%>
+              <strong><p style="font-size: 20px">
+              <%= link_to "EDIT" ,edit_food_path(food),class: "btn btn-lg btn-primary"%>
+              <%= link_to "DELETE", food, method: :delete,
+                                  data: { confirm: "You sure?" },class: "btn btn-lg btn-primary"%>
+              </p></strong>       
+    <%end%>
+              
+              <div class="extrontent">
+          <a>
+            <i class="user icon"></i>
+          </a>
+        </div>
+
+    <%if logged_in? && !current_user.admin?%>
+    
+    <%end%>      
+
+              </div>
+          </div>
+        </div>
+      </div>
+     <%end%>
+      <%end%>
+    </div>
+    </div>
+          
+  </h2>
+<%end%>
+<%end%>
+
+  
+  
+
+</div>
+</div>

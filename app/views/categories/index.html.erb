@@ -1,0 +1,17 @@
+<% provide(:title, 'All Categories') %>
+<h1>All Categories</h1>
+<%= will_paginate %>
+<ul>
+  <% @categories.each do |c| %>
+    <li>
+      <%= link_to c.name, c %>
+      <% if current_user.admin?%>
+    | <%= link_to "delete", c, method: :delete,
+                                  data: { confirm: "You sure?" } %> 
+    |
+      <a href ="/categories/<%=c.id%>/edit"> Edit </a>                         
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+<%= will_paginate %>

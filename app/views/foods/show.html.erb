@@ -1,0 +1,42 @@
+
+<div class="col-md-12">
+<div class="col-md-6" >   
+    <p class="showfood_photo" style="text-align: center;"><%=foodimage( "#{@food.url}", "medium" ) %></p>  
+</div>
+<div class="col-md-6">
+    <p class="info" style="text-align: center;" > <%= @food.name%><br><h1>Price: <%= @food.price%>VND</h1></p>
+     <div style="text-align: center;" class="star-rating" data-score= <%=@avg_review%>></div>
+     
+</div>
+</div>
+
+
+
+
+<%if !@reviews.nil?%>
+<% @reviews.each do |r| %>
+    
+<ul class="list-group-comment">
+<%=r.created_at%>
+    <div class="star-rating" data-score= <%=r.rating%>> 
+    </div>
+
+    <div class="comment-area">
+        <p class="comment-review"><b style="font-size: 17px"> <%= r.user.name%>: </b>
+         <i style="font-size: 17px "> <%= r.comment%></i></p>
+    </div>      
+</ul>
+
+<%end%>
+<%end%>
+<p><%= link_to "Write Comment", new_food_review_path(@food) , class: "btn btn-primary"%></p>
+
+<script>
+ $('.star-rating').raty({
+            path: '/assets/',
+            readOnly: true,
+            score: function () {
+                return $(this).attr('data-score');
+            }
+        });
+ </script>

@@ -1,0 +1,104 @@
+    <header class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <div class="logo_area">
+          <%= link_to image_tag("logo.png", height: '60', width: 'auto', class: "foodlogo"), root_path, id: "logo" %>
+          <%= link_to "F&D STORE", root_path, id: "logo" %>
+        </div>
+        <nav>
+          <ul class="nav navbar-nav navbar-right">
+            <li><%= link_to "Home", root_path %></li>
+  <!-- Login as Admin -->
+          <% if logged_in? && current_user.admin?%>
+
+          <li><%= link_to "Users", users_path %></li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Categories <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <%if(!@categories.blank?)%>
+             <% @categories.each do |category| %>
+              <li><a href="http://localhost:3000/categories/<%=category.id%>"><%=category.name%></a> 
+              <%end%>  
+              <li class="divider"></li>   
+              <%end%>
+              <li><%= link_to "All Categories", categories_path %></li>
+              <li class="divider"></li> 
+              <li><%= link_to "Add Category", addcategory_path %></li>
+            </ul>
+          </li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Foods <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "All Food", foods_path %></li>
+              <li><%= link_to "Add Food", addfood_path %></li>
+              <li class="divider"></li>     
+            </ul>
+          </li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Account <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Profile", current_user %></li>
+              <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+              <li class="divider"></li>
+              <li>
+                <%= link_to "Log out", logout_path, method: "delete" %>
+              </li>  
+            </ul>
+          </li>
+
+          <%end%>
+
+
+             <!-- Login as normal User -->
+          <% if logged_in? && !current_user.admin? %>         
+          <li><%= link_to "All Food", foods_path %></li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Categories <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <%if(!@categories.blank?)%>
+             <% @categories.each do |category| %>
+              <li><a href="http://localhost:3000/categories/<%=category.id%>"><%=category.name%></a> 
+              <%end%>  
+              <li><%= link_to "All Categories", categories_path %></li>
+              <li class="divider"></li>   
+              <%end%>
+              
+            </ul>
+          </li>      
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Account <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Profile", current_user %></li>
+              <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+              <li class="divider"></li>
+              <li>
+                <%= link_to "Log out", logout_path, method: "delete" %>
+              </li>
+            </ul>
+          </li>
+          
+          <% end %>
+
+
+          <!-- Not logged in -->
+        <% if !logged_in? %>
+          <li><%= link_to "Log in", login_path %></li>
+        <% end %>
+          </ul>
+        </nav>
+      </div>
+    </header>

@@ -38,7 +38,7 @@ display: table-cell;
           <div class="thumbnail">
           <!--<a href="foods/<%=food.id%>"><img src = "<%=food.url%>"></a> -->
           <div class="photo_represent"> 
-            <a href="http://localhost:3000/foods/<%=food.id%>"><img src = "<%=food.url%>"></a> 
+            <%= link_to image_tag("#{food.url}"), food %>
           </div>
             <div class="caption">
               <h1 style=" margin-bottom:0px"><strong style="color: #000"><%= food.name %></strong></h1>
